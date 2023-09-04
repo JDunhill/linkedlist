@@ -8,20 +8,19 @@ typedef struct node {
 
 typedef struct list {
     struct node * head;
-    struct node * end;
 } list_n;
 
-node_n * createList();
+list_n createList();
 
-void add_to_front(node_n ** head, int val);
+void add_to_front(list_n * first, int val);
 
-void add_to_end(node_n * head, int val);
+void add_to_end(list_n first, int val);
 
-int pop(node_n ** head);
+int pop(list_n);
 
-int remove_by_index(node_n ** head, int val);
+int remove_by_index(list_n * first, int val);
 
-void printList(node_n * head);
+void printList(list_n first);
 
 
 #endif  

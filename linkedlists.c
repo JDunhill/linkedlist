@@ -3,8 +3,9 @@
 #include "linkedlists.h"
 
 
-node_n* createList() {
+list_n createList() {
     node_n * head = NULL;
+    list_n first;
     head = malloc(sizeof(node_n));
     if (head == NULL) {
         printf("Nothing to show");
@@ -12,20 +13,21 @@ node_n* createList() {
 
     head->val = 1;
     head->next = NULL;
-    return head;
+    first.head = head;
+    return first;
 }
 
-void add_to_front(node_n ** head, int val) {
+void add_to_front(list_n * first, int val) {
     node_n * new_node;
     new_node = malloc(sizeof(node_n));
 
     new_node->val = val;
-    new_node->next = *head;
-    *head = new_node;
+    new_node->next = first->head;
+    first->head = new_node;
 }
 
-void add_to_end(node_n * head, int val) {
-    node_n * current = head;
+void add_to_end(list_n first, int val) {
+    node_n * current = first.head;
     while (current->next != NULL) {
         current = current->next;
     }
@@ -36,30 +38,30 @@ void add_to_end(node_n * head, int val) {
 
 }
 
-int pop(node_n ** head) {
+int pop(list_n first) {
 
     int ret = -1;
     node_n * next_node = NULL;
 
-    if(*head == NULL) {
+    if(first.head == NULL) {
         return -1;
     }
 
-    next_node = (*head)->next;
-    ret = (*head)->val;
-    free(*head);
-    *head = next_node;
+    next_node = (first.head)->next;
+    ret = (first.head)->val;
+    free(first.head);
+    first.head = next_node;
 
     return ret;
 }
 
-int remove_by_index(node_n ** head, int val) {
+int remove_by_index(list_n *first, int val) {
     int i = 0, ret = -1;
-    node_n * current = *head;
+    node_n * current = first->head;
     node_n * temp = NULL;
 
     if(val == 0) {
-        return pop(head);
+        return pop(*first);
     }
 
     for(i = 0; i < val - 1; i++) {
@@ -79,8 +81,8 @@ int remove_by_index(node_n ** head, int val) {
     free(temp);
 }
 
-void printList(node_n * head) {
-    node_n * current = head;
+void printList(list_n first) {
+    node_n * current = first.head;
 
     while (current != NULL) {
         printf("%d\n", current->val);
